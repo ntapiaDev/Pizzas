@@ -8,7 +8,7 @@ const NavBar = () => {
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Container>
                 <Navbar.Brand>
-                    <Image src="images\White_pizza-logo_250x250.jpg" alt="Logo Pizza Delicious" style={{width: '20%'}} />
+                    <Image src="images\White_pizza-logo.jpg" alt="Logo Pizza Delicious" style={{width: '20%'}} />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
