@@ -13,6 +13,9 @@ const NavBar = () => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ms-auto">
+                        <LinkContainer to="/register">
+                            <Nav.Link>Register</Nav.Link>
+                        </LinkContainer>
                         <LinkContainer to="/login">
                             <Nav.Link>Login</Nav.Link>
                         </LinkContainer>
