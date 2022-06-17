@@ -3,6 +3,7 @@ var router = express.Router();
 
 router.use(express.json());
 
+//Registration
 router.post('/adduser', function (req, res) {
 
     var db = req.db;
@@ -39,6 +40,29 @@ router.post('/adduser', function (req, res) {
                 });
             }
         });
+    });
+});
+
+//Login
+router.post('/login', function (req, res) {
+
+    var db = req.db;
+
+    var email = req.body.email;
+    var password = req.body.password;
+
+    var collection = db.get('user');
+
+    collection.find({ email: email }, {}, function (e, docs) {
+
+        if(docs == '') {
+            res.json({
+                'code': 404,
+                'message': 'This user does not exit.'
+            });
+            return;
+        }
+
     });
 });
 

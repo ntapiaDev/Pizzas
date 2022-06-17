@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
-import bcrypt from 'bcryptjs';
-
-const salt = bcrypt.genSaltSync(10);
 
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -65,7 +62,7 @@ const Register = () => {
             const response = await axios.post('http://localhost:8080/user/adduser',
                 {
                     email: email,
-                    password: bcrypt.hashSync(password, salt)
+                    password: password
                 },
                 {
                     headers: {
