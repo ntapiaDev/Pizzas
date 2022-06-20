@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
+    const { setAuth } = useAuth();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
@@ -42,7 +44,8 @@ const Login = () => {
                 setErrorMsg(response.data.message);
             } else if(response.data.code === 200) {
                 //User connected
-                
+                setAuth({email});
+                navigate("/", { replace: true });
             }
 
         } catch (err) {

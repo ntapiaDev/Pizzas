@@ -8,20 +8,23 @@ import Login from './components/Login';
 import NavBar from './components/NavBar';
 import Policy from './components/Policy';
 import Register from './components/Register';
+import { AuthProvider } from './context/AuthProvider';
 
 function App() {
   return (
     <BrowserRouter>
-      <TopBar />
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/policy" element={<Policy />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
+      <AuthProvider>
+        <TopBar />
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/policy" element={<Policy />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

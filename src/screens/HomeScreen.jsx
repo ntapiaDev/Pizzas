@@ -3,8 +3,10 @@ import AllPizza from '../pizza-data';
 import { Container, Row, Col } from "react-bootstrap";
 import Pizza from '../components/Pizza';
 import axios from 'axios';
+import useAuth from "../hooks/useAuth";
 
 const HomeScreen = () => {
+    const { auth } = useAuth();
     const [pizzas, setPizzas] = useState([]);
 
     useEffect(() => {
