@@ -1,13 +1,25 @@
 import React, {useState} from 'react'
 import { Card, Button, Row, Col, Modal } from 'react-bootstrap';
+// import useLocalStorage from '../hooks/useLocalStorage';
 
 const Pizza = (props) => {
     const[taille, setTaille] = useState('small');
     const[quantite, setQuantite] = useState(1);
     const[show, setShow] = useState(false);
 
+    // const [cart, setCart] = useLocalStorage("cart", "");
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const addPizza = () => {
+
+        let value = 'order_' + Math.random().toString(36).substring(2,7);
+        let pizza = {'name' : props.lapizza.name, 'varient' : taille, 'quantity' : quantite, 'image' : props.lapizza.image, 'id' : props.lapizza._id, 'value' : value};
+        localStorage.setItem(value, JSON.stringify(pizza));
+
+        props.setCartLength(localStorage.length);
+    }
 
   return (
     <>
@@ -48,7 +60,7 @@ const Pizza = (props) => {
                         Prix : {props.lapizza.prices[0][taille] * quantite} €
                     </Col>
                     <Col md={7}>
-                        <Button className='bg-warning text-light'>Add</Button>
+                        <Button className='bg-warning text-light' onClick={addPizza}>Add</Button>
                         <Button className='bg-success text-light ms-3' onClick={handleShow}>Show</Button>
                     </Col>
                 </Row>

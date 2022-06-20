@@ -5,7 +5,7 @@ import Pizza from '../components/Pizza';
 import axios from 'axios';
 import useAuth from "../hooks/useAuth";
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
     const { auth } = useAuth();
     const [pizzas, setPizzas] = useState([]);
 
@@ -32,7 +32,7 @@ const HomeScreen = () => {
                     {
                         pizzas.map(pizza => (
                             <Col className='col-md-4 d-flex justify-content-center'>
-                                <Pizza lapizza={pizza} />
+                                <Pizza lapizza={pizza} setCartLength={props.setCartLength} />
                             </Col>
                         ))
                     }

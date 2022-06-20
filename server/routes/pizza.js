@@ -11,4 +11,15 @@ router.get('/', function (req, res, next) {
     });
 });
 
+router.get('/:id', function (req, res, next) {
+
+    var db = req.db;
+    let pizzaToFind = req.params.id;
+
+    var collection = db.get('pizza');
+    collection.findOne({ "_id": pizzaToFind }, {}, function (e, docs) {
+        res.json(docs);
+    });
+});
+
 module.exports = router;
