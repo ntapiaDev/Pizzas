@@ -37,6 +37,12 @@ const Login = () => {
             if(response.data.code === 404) {
                 setError('true');
                 setErrorMsg(response.data.message);
+            } else if(response.data.code === 403) {
+                setError('true');
+                setErrorMsg(response.data.message);
+            } else if(response.data.code === 200) {
+                //User connected
+                
             }
 
         } catch (err) {

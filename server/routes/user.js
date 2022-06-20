@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
+//Hash password
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 router.use(express.json());
 
 //Registration
@@ -23,22 +27,24 @@ router.post('/adduser', function (req, res) {
             return;
         }
 
-        collection.insert({
-            "email": email,
-            "password": password,
-        }, function (err) {
-            if (err) {
-                res.json({
-                    'code': 400,
-                    'message': 'There was a problem when creating this user.'
-                });
-            }
-            else {
-                res.json({
-                    'code': 200,
-                    'message': 'User created.'
-                });
-            }
+        bcrypt.hash(password, saltRounds, function(err, hashedPassword) {
+            collection.insert({
+                "email": email,
+                "password": hashedPassword,
+            }, function (err) {
+                if (err) {
+                    res.json({
+                        'code': 400,
+                        'message': 'There was a problem when creating this user.'
+                    });
+                }
+                else {
+                    res.json({
+                        'code': 200,
+                        'message': 'User created.'
+                    });
+                }
+            });
         });
     });
 });
@@ -63,6 +69,20 @@ router.post('/login', function (req, res) {
             return;
         }
 
+        const hashedPassword = docs[0].password
+        bcrypt.compare(password, hashedPassword, function(err, result) {
+            if(!result) {
+                res.json({
+                    'code': 403,
+                    'message': 'Email or password incorrect.'
+                });
+            } else {
+                res.json({
+                    'code': 200,
+                    'message': 'User connected.'
+                });
+            }
+        });
     });
 });
 
