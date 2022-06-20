@@ -1,13 +1,16 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { Container, Table } from 'react-bootstrap';
+import { Container, Table, Button } from 'react-bootstrap';
 import { FiDelete } from 'react-icons/fi';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = (props) => {
+    const navigate = useNavigate();
     const [cart, setCart] = useState();
     const [total, setTotal] = useState(0);
+    const [nbPizza, setNbPizza] = useState(0);
     const [update, setUpdate] = useState(0);
 
     useEffect(() => {
@@ -18,7 +21,8 @@ const Cart = (props) => {
         setCart(storage);
 
         let getTotal = 0;
-        if(storage.length === 0) {
+        let getNbPizza = 0;
+        if (storage.length === 0) {
             setTotal(getTotal);
             return;
         }
@@ -33,6 +37,8 @@ const Cart = (props) => {
                     });
                     getTotal += response.data.prices[0][JSON.parse(order).varient] * JSON.parse(order).quantity;
                     setTotal(getTotal);
+                    getNbPizza += parseInt(JSON.parse(order).quantity);
+                    setNbPizza(getNbPizza);
                 } catch (err) {
                     console.error(err);
                 }
@@ -45,6 +51,20 @@ const Cart = (props) => {
         localStorage.removeItem(i);
         props.setCartLength(localStorage.length);
         setUpdate(update + 1);
+    }
+
+    const pay = () => {
+
+        if (total === 0) {
+            return;
+        }
+
+        navigate("/paypal", {
+            state: {
+                totalPrice: total,
+                totalOrders: nbPizza
+            }
+        });
     }
 
     return (
@@ -63,8 +83,8 @@ const Cart = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {cart?.map((pizza) =>
-                        <tr>
+                    {cart?.map((pizza, i) =>
+                        <tr key={i}>
                             <td><img src={JSON.parse(pizza).image} alt={JSON.parse(pizza).name} className="w-25" /></td>
                             <td>{JSON.parse(pizza).name}</td>
                             <td>{JSON.parse(pizza).varient}</td>
@@ -79,6 +99,9 @@ const Cart = (props) => {
                     </tr>
                 </tbody>
             </Table>
+            <div className='d-flex justify-content-end'>
+                <Button className='alert alert-success' disabled={total === 0} onClick={() => pay()}>Continue</Button>
+            </div>
 
         </Container>
     )

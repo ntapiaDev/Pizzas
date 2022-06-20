@@ -6,6 +6,7 @@ const Pizza = (props) => {
     const[taille, setTaille] = useState('small');
     const[quantite, setQuantite] = useState(1);
     const[show, setShow] = useState(false);
+    const[order, setOrder] = useState(0);
 
     // const [cart, setCart] = useLocalStorage("cart", "");
 

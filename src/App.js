@@ -8,6 +8,7 @@ import Contact from './components/Contact';
 import HomeScreen from './screens/HomeScreen';
 import Login from './components/Login';
 import NavBar from './components/NavBar';
+import Paypal from './components/Paypal';
 import Policy from './components/Policy';
 import Register from './components/Register';
 import RequireAuth from "./components/RequireAuth"
@@ -28,9 +29,10 @@ function App() {
           <Route path="/policy" element={<Policy />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route element={<RequireAuth />}> */}
+          <Route element={<RequireAuth />}>
             <Route path="/cart" element={<Cart setCartLength={setCartLength}/>} />
-          {/* </Route> */}
+            <Route path="/paypal" element={<Paypal />} />
+          </Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>
