@@ -1,25 +1,36 @@
 import React, {useState} from 'react'
 import { Card, Button, Row, Col, Modal } from 'react-bootstrap';
-// import useLocalStorage from '../hooks/useLocalStorage';
 
 const Pizza = (props) => {
     const[taille, setTaille] = useState('small');
     const[quantite, setQuantite] = useState(1);
     const[show, setShow] = useState(false);
-    const[order, setOrder] = useState(0);
-
-    // const [cart, setCart] = useLocalStorage("cart", "");
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const addPizza = () => {
+        let cart = [];
+        if(props.storage !== '') {
+            cart = props.storage;
+        }
 
-        let value = 'order_' + Math.random().toString(36).substring(2,7);
-        let pizza = {'name' : props.lapizza.name, 'varient' : taille, 'quantity' : quantite, 'image' : props.lapizza.image, 'id' : props.lapizza._id, 'value' : value};
-        localStorage.setItem(value, JSON.stringify(pizza));
+        let added = false;
+        cart.forEach(pizza => {
+            if(pizza.name === props.lapizza.name && pizza.varient === taille) {
+                pizza.quantity = parseInt(pizza.quantity) + parseInt(quantite);
+                added = true;
+                return;
+            }
+        });
 
-        props.setCartLength(localStorage.length);
+        if(!added) {
+            let pizza = {'name' : props.lapizza.name, 'varient' : taille, 'quantity' : quantite, 'image' : props.lapizza.image, 'price' : props.lapizza.prices[0][taille], 'description' : props.lapizza.description, 'id' : props.lapizza._id};
+            cart.push(pizza);
+        }
+
+        props.setStorage(cart);
+        props.setCartLength(props.storage.length);
     }
 
   return (

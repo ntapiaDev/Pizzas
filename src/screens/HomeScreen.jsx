@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import AllPizza from '../pizza-data';
 import { Container, Row, Col } from "react-bootstrap";
 import Pizza from '../components/Pizza';
 import axios from 'axios';
-import useAuth from "../hooks/useAuth";
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const HomeScreen = (props) => {
-    const { auth } = useAuth();
     const [pizzas, setPizzas] = useState([]);
+    const [storage, setStorage] = useLocalStorage("cart", "");
 
     useEffect(() => {
         const getPizzas = async () => {
@@ -32,7 +31,7 @@ const HomeScreen = (props) => {
                     {
                         pizzas.map(pizza => (
                             <Col className='col-md-4 d-flex justify-content-center'>
-                                <Pizza lapizza={pizza} setCartLength={props.setCartLength} />
+                                <Pizza lapizza={pizza} setCartLength={props.setCartLength} storage={storage} setStorage={setStorage} />
                             </Col>
                         ))
                     }
