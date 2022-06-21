@@ -13,16 +13,16 @@ const TopBar = () => {
                     Livraison gratuite à domicile pour toute commande supérieure à 50€
                 </h6>
                 <Nav className="ms-auto">
-                    <LinkContainer to="/" activeClassName>
+                    <LinkContainer to="/">
                         <Nav.Link>Home</Nav.Link>
                     </LinkContainer>
-                    <LinkContainer to="about" activeClassName>
+                    <LinkContainer to="about">
                         <Nav.Link>About us</Nav.Link>
                     </LinkContainer>
-                    <LinkContainer to="contact" activeClassName>
+                    <LinkContainer to="contact">
                         <Nav.Link>Contact</Nav.Link>
                     </LinkContainer>
-                    <LinkContainer to="policy" activeClassName>
+                    <LinkContainer to="policy">
                         <Nav.Link>Terms and Policy</Nav.Link>
                     </LinkContainer>
                 </Nav>

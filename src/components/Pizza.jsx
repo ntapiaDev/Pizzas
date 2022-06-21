@@ -45,7 +45,7 @@ const Pizza = (props) => {
             <Card.Img variant="top" src={props.lapizza.image} />
             <Card.Body>
                 <Card.Title>{props.lapizza.name}</Card.Title>
-                <Card.Text>
+                <Card.Body>
                     <Row>
                         <Col md={6}>
                             <h6>Taille :
@@ -53,8 +53,8 @@ const Pizza = (props) => {
                                     value={taille}
                                     onChange={(e) => setTaille(e.target.value)}
                                 >
-                                    {props.lapizza.varients.map(varient => (
-                                        <option value={varient}>{varient}</option>
+                                    {props.lapizza.varients.map((varient, i) => (
+                                        <option key={i} value={varient}>{varient}</option>
                                     ))}
                                 </select>
                             </h6>
@@ -66,13 +66,13 @@ const Pizza = (props) => {
                                 onChange={(e) => setQuantite(e.target.value)}
                             >
                                 {[...Array(10).keys()].map((v,i) => (
-                                    <option value={i+1}>{i+1}</option>
+                                    <option key={i} value={i+1}>{i+1}</option>
                                 ))}
                             </select>
                             </h6>
                         </Col>
                     </Row>
-                </Card.Text>
+                </Card.Body>
                 <Row>
                     <Col md={5}>
                         Prix : {props.lapizza.prices[0][taille] * quantite} €

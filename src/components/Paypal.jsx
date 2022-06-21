@@ -54,9 +54,10 @@ const Paypal = (props) => {
                         <h1>Thank you !</h1>
                         <p>Your orders :</p>
                         <ul>
-                            {location.state.pizzas.map((pizza) => 
-                                <li>{pizza.name} - {pizza.varient} - quantity : {pizza.quantity} - {pizza.price}€</li>
-                        )}
+                            {location.state.pizzas.map((pizza, i) => 
+                                <li key={i}>{pizza.name} - {pizza.varient} - quantity : {pizza.quantity} - {pizza.price}€</li>
+                            )
+                        }
                         </ul>
                         <p>Total order : {location.state.totalPrice}€</p>
                         <h3>Enjoy your food !</h3>

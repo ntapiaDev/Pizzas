@@ -29,8 +29,8 @@ const HomeScreen = (props) => {
             <Container>
                 <Row>
                     {
-                        pizzas.map(pizza => (
-                            <Col className='col-md-4 d-flex justify-content-center'>
+                        pizzas.map((pizza, i) => (
+                            <Col key={i} className='col-md-4 d-flex justify-content-center'>
                                 <Pizza lapizza={pizza} setCartLength={props.setCartLength} storage={storage} setStorage={setStorage} />
                             </Col>
                         ))
