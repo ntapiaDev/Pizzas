@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
-import { Card, Button, Row, Col, Modal } from 'react-bootstrap';
+import { Card, Button, Row, Col, Modal, Container } from 'react-bootstrap';
 
 const Pizza = (props) => {
     const[taille, setTaille] = useState('small');
     const[quantite, setQuantite] = useState(1);
     const[show, setShow] = useState(false);
+    const[added, setAdded] = useState(false);
+    const[addedClass, setAddedClass] = useState('notif');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -31,11 +33,15 @@ const Pizza = (props) => {
 
         props.setStorage(cart);
         props.setCartLength(props.storage.length);
+
+        //ANIME
+        setAddedClass('notif animated');
+        setTimeout(() => setAddedClass('notif'), 2000);
     }
 
   return (
     <>
-        <Card style={{ width: '18rem', marginTop: '50px' }}>
+        <Card style={{ width: '18rem', marginTop: '50px' }} className="notif-container">
             <Card.Img variant="top" src={props.lapizza.image} />
             <Card.Body>
                 <Card.Title>{props.lapizza.name}</Card.Title>
@@ -77,6 +83,7 @@ const Pizza = (props) => {
                     </Col>
                 </Row>
             </Card.Body>
+            <Container className={addedClass}>Pizza added to your cart !</Container>
         </Card>
 
         {/* Modale */}

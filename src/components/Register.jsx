@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -115,6 +115,9 @@ const Register = () => {
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Submit
+                </Button>
+                <Button variant="primary" type="submit" className='mx-3'>
+                    <Link to="../login" className='text-light text-decoration-none'>I already have an account</Link>
                 </Button>
             </Form>
         </Container>

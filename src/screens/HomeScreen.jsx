@@ -6,7 +6,7 @@ import useLocalStorage from '../hooks/useLocalStorage';
 
 const HomeScreen = (props) => {
     const [pizzas, setPizzas] = useState([]);
-    const [storage, setStorage] = useLocalStorage("cart", "");
+    const [storage, setStorage] = useLocalStorage("cart", []);
 
     useEffect(() => {
         const getPizzas = async () => {

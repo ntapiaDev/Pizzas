@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import useAuth from "../hooks/useAuth";
@@ -69,6 +69,9 @@ const Login = () => {
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Sign in
+                </Button>
+                <Button variant="primary" type="submit" className='mx-3'>
+                    <Link to="../register" className='text-light text-decoration-none'>Register a new account</Link>
                 </Button>
             </Form>
         </Container>

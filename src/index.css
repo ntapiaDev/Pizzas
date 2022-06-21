@@ -12,6 +12,44 @@ code {
     monospace;
 }
 
+/*CUSTOM CSS*/
+
+.needLogin {
+  position: absolute;
+  margin-top: 5px;
+  margin-left: -250px;
+}
+
 .pointer:hover {
   cursor: pointer;
+}
+
+.notif-container {
+  position: relative;
+}
+
+.notif {
+  padding: .5em;
+  background-color: #28a745;
+  color: #EEE;
+  text-align: center;
+  font-weight: bold;
+  position: absolute;
+  bottom: -40px;
+  z-index: -5;
+  display: none;
+}
+
+.notif.animated {
+  display: block;
+  animation: 1.5s notify;
+}
+
+@keyframes notify {
+  from {
+    bottom: 0px;
+  }
+  to {
+    bottom: -40px;
+  }
 }

@@ -37,7 +37,7 @@ const NavBar = (props) => {
                                 </>
                             }
                             <LinkContainer to="/cart">
-                                <Nav.Link>Cart ({props.cartLength})</Nav.Link>
+                                <Nav.Link>Cart ({props.cartLength}){!auth.email ? <><br/><span className='needLogin alert alert-danger'>You need an account to validate your order</span></> : <></>}</Nav.Link>
                             </LinkContainer>
                         </Nav>
                     </Navbar.Collapse>

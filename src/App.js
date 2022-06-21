@@ -18,7 +18,7 @@ import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
   const [storage] = useLocalStorage("cart");
-  const [cartLength, setCartLength] = useState(0);
+  const [cartLength, setCartLength] = useState(storage ? storage.length : 0);
   const initialOptions = {
     "client-id": "test",
     currency: "USD",
@@ -39,10 +39,10 @@ function App() {
             <Route path="/policy" element={<Policy />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            {/* <Route element={<RequireAuth />}> */}
+            <Route element={<RequireAuth />}>
               <Route path="/cart" element={<Cart setCartLength={setCartLength} />} />
               <Route path="/paypal" element={<Paypal />} />
-            {/* </Route> */}
+            </Route>
           </Routes>
         </AuthProvider>
       </BrowserRouter>
