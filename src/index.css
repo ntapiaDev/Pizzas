@@ -53,3 +53,15 @@ code {
     bottom: -40px;
   }
 }
+
+.paypal-container div {
+  margin-top: 1em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.paypal-container div div {
+  display: flex;
+  justify-content: center;
+}

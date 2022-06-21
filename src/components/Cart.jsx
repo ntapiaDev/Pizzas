@@ -44,14 +44,15 @@ const Cart = (props) => {
 
     const pay = () => {
 
-        // if (total === 0) {
-        //     return;
-        // }
+        if (total === 0) {
+            return;
+        }
 
         navigate("/paypal", {
             state: {
                 totalPrice: total,
-                totalOrders: nbPizza
+                totalOrders: nbPizza,
+                pizzas: storage
             }
         });
     }

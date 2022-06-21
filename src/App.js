@@ -33,7 +33,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route element={<RequireAuth />}>
             <Route path="/cart" element={<Cart setCartLength={setCartLength} />} />
-            <Route path="/paypal" element={<Paypal />} />
+            <Route path="/paypal" element={<Paypal setCartLength={setCartLength} />} />
           </Route>
         </Routes>
       </AuthProvider>
