@@ -2,12 +2,14 @@ import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import { Container } from 'react-bootstrap';
 import { useCookies } from "react-cookie";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 import axios from 'axios';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Paypal = (props) => {
     const location = useLocation();
+    const navigate = useNavigate();
     const [storage, setStorage] = useLocalStorage("cart", []);
     const [cookies, setCookie] = useCookies([]);
 
@@ -17,6 +19,10 @@ const Paypal = (props) => {
     const paypal = useRef();
 
     useEffect(() => {
+        if(location.state == undefined || location.state?.totalPrice <= 0) {
+            navigate("/", { replace: true });
+        }
+
         if (checkout) {
             window.paypal.Buttons({
                 createOrder: (data, action, err) => {
@@ -49,7 +55,7 @@ const Paypal = (props) => {
                                 }
                             });
                         console.log(response);
-            
+
                     } catch (err) {
                         console.log(err.response);
                     }
@@ -64,6 +70,10 @@ const Paypal = (props) => {
         }
     }, [checkout]);
 
+    const handleCaptcha = (e) => {
+        console.log("Captcha value:", e.current.value);
+    }
+
     return (
         <Container className="mt-5 d-flex flex-column align-items-center paypal-container">
             {checkout ? <>
@@ -77,16 +87,20 @@ const Paypal = (props) => {
                         <h1>Thank you !</h1>
                         <p>Your orders :</p>
                         <ul>
-                            {location.state.pizzas.map((pizza, i) => 
+                            {location.state.pizzas.map((pizza, i) =>
                                 <li key={i}>{pizza.name} - {pizza.varient} - quantity : {pizza.quantity} - {pizza.price}€</li>
                             )
-                        }
+                            }
                         </ul>
                         <p>Total order : {location.state.totalPrice}€</p>
                         <h3>Enjoy your food !</h3>
                     </div>
                 </> : <>
                     <h1>Time to pay</h1>
+                    <ReCAPTCHA
+                        sitekey="6LfGWI4gAAAAAOd82s2KZn1t06gRAio1rrrNzS8N"
+                        onChange={(e) => handleCaptcha(e)}
+                    />
                     <button onClick={() => setCheckout(true)} className="mt-5">
                         Checkout
                     </button>

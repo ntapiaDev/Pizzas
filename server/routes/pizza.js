@@ -43,15 +43,15 @@ router.post('/order', function (req, res, next) {
 
             collection.find({ email: email, _id: id }, {}, function (e, docs) {
                 if (docs != '') {
-                    console.log(docs);
-                    let user = [docs[0].email, docs[0]._id];
+                    let user = ['Nicolas', 'Lapin', docs[0].email, '12 rue des chats, 76100 ROUEN'];
 
                     //Création du nouvel order
                     orderCollection = db.get('order');
                     orderCollection.insert({
                         "order": order,
                         "price": price,
-                        "user": user
+                        "user": user,
+                        "comment": 'please hurry I\'m verry angry !'
                     }, function (err) {
                         if (err) {
                             res.json({
