@@ -5,7 +5,10 @@ var router = express.Router();
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-router.use(express.json());
+const jwt = require('jsonwebtoken');
+const SECRET = 'mykey';
+
+// router.use(express.json());
 
 //Registration
 router.post('/adduser', function (req, res) {
@@ -77,9 +80,15 @@ router.post('/login', function (req, res) {
                     'message': 'Email or password incorrect.'
                 });
             } else {
+                const token = jwt.sign({
+                    id: docs[0]._id,
+                    email: docs[0].email
+                }, SECRET, { expiresIn: '3 hours' })
+
                 res.json({
                     'code': 200,
-                    'message': 'User connected.'
+                    'message': 'User connected.',
+                    access_token: token
                 });
             }
         });

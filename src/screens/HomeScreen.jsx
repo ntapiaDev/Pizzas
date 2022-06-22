@@ -3,10 +3,14 @@ import { Container, Row, Col } from "react-bootstrap";
 import Pizza from '../components/Pizza';
 import axios from 'axios';
 import useLocalStorage from '../hooks/useLocalStorage';
+import useAuth from "../hooks/useAuth";
 
 const HomeScreen = (props) => {
     const [pizzas, setPizzas] = useState([]);
     const [storage, setStorage] = useLocalStorage("cart", []);
+
+    const auth = useAuth();
+    console.log(auth);
 
     useEffect(() => {
         const getPizzas = async () => {

@@ -44,7 +44,8 @@ const Login = () => {
                 setErrorMsg(response.data.message);
             } else if(response.data.code === 200) {
                 //User connected
-                setAuth({email});
+                const token = response.data.access_token;
+                setAuth({email, token});
                 navigate("/", { replace: true });
             }
 
