@@ -3,9 +3,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import useAuth from "../hooks/useAuth";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
     const { setAuth } = useAuth();
+    const [cookies, setCookie] = useCookies([]);
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
@@ -46,6 +48,8 @@ const Login = () => {
                 //User connected
                 const token = response.data.access_token;
                 setAuth({email, token});
+                setCookie('email', email, { path: '/' });
+                setCookie('token', token, { path: '/' });
                 navigate("/", { replace: true });
             }
 

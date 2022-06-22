@@ -14,6 +14,7 @@ import Register from './components/Register';
 import RequireAuth from "./components/RequireAuth"
 import { AuthProvider } from './context/AuthProvider';
 import useLocalStorage from './hooks/useLocalStorage';
+import { CookiesProvider } from "react-cookie";
 
 function App() {
   const [storage] = useLocalStorage("cart");
@@ -21,22 +22,24 @@ function App() {
 
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <TopBar />
-        <NavBar cartLength={cartLength} />
-        <Routes>
-          <Route path="/" element={<HomeScreen setCartLength={setCartLength} />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/policy" element={<Policy />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route element={<RequireAuth />}>
-            <Route path="/cart" element={<Cart setCartLength={setCartLength} />} />
-            <Route path="/paypal" element={<Paypal setCartLength={setCartLength} />} />
-          </Route>
-        </Routes>
-      </AuthProvider>
+      <CookiesProvider>
+        <AuthProvider>
+          <TopBar />
+          <NavBar cartLength={cartLength} />
+          <Routes>
+            <Route path="/" element={<HomeScreen setCartLength={setCartLength} />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/policy" element={<Policy />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route element={<RequireAuth />}>
+              <Route path="/cart" element={<Cart setCartLength={setCartLength} />} />
+              <Route path="/paypal" element={<Paypal setCartLength={setCartLength} />} />
+            </Route>
+          </Routes>
+        </AuthProvider>
+      </CookiesProvider>
     </BrowserRouter>
   );
 }

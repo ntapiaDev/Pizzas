@@ -22,7 +22,7 @@ router.post('/adduser', function (req, res) {
 
     collection.find({ email: email }, {}, function (e, docs) {
 
-        if(docs != '') {
+        if (docs != '') {
             res.json({
                 'code': 409,
                 'message': 'This email address is already used.'
@@ -30,7 +30,7 @@ router.post('/adduser', function (req, res) {
             return;
         }
 
-        bcrypt.hash(password, saltRounds, function(err, hashedPassword) {
+        bcrypt.hash(password, saltRounds, function (err, hashedPassword) {
             collection.insert({
                 "email": email,
                 "password": hashedPassword,
@@ -64,7 +64,7 @@ router.post('/login', function (req, res) {
 
     collection.find({ email: email }, {}, function (e, docs) {
 
-        if(docs == '') {
+        if (docs == '') {
             res.json({
                 'code': 404,
                 'message': 'This user does not exit.'
@@ -73,8 +73,8 @@ router.post('/login', function (req, res) {
         }
 
         const hashedPassword = docs[0].password
-        bcrypt.compare(password, hashedPassword, function(err, result) {
-            if(!result) {
+        bcrypt.compare(password, hashedPassword, function (err, result) {
+            if (!result) {
                 res.json({
                     'code': 403,
                     'message': 'Email or password incorrect.'
@@ -83,8 +83,7 @@ router.post('/login', function (req, res) {
                 const token = jwt.sign({
                     id: docs[0]._id,
                     email: docs[0].email
-                }, SECRET, { expiresIn: '3 hours' })
-
+                }, SECRET, { expiresIn: '3 hours' });
                 res.json({
                     'code': 200,
                     'message': 'User connected.',
@@ -93,6 +92,39 @@ router.post('/login', function (req, res) {
             }
         });
     });
+});
+
+router.post('/refresh', function (req, res) {
+
+    console.log(req.body.token);
+
+    jwt.verify(req.body.token, SECRET, (err, decodedToken) => {
+        if (err) {
+            res.status(401).json({ message: 'Error. Bad token' })
+        } else {
+            id = decodedToken.id;
+            email = decodedToken.email;
+
+            var db = req.db;
+            var collection = db.get('user');
+
+            collection.find({ email: email, _id: id }, {}, function (e, docs) {
+                if (docs != '') {
+                    
+                    const token = jwt.sign({
+                        id: id,
+                        email: email
+                    }, SECRET, { expiresIn: '3 hours' });
+                    res.json({
+                        'code': 200,
+                        'message': 'Token refreshed.',
+                        access_token: token
+                    });
+
+                }
+            });
+        }
+    })
 });
 
 module.exports = router;
