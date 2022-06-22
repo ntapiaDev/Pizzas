@@ -5,7 +5,6 @@ import { useCookies } from "react-cookie";
 import { useLocation, useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 import axios from 'axios';
-import ReCAPTCHA from "react-google-recaptcha";
 
 const Paypal = (props) => {
     const location = useLocation();
@@ -19,7 +18,7 @@ const Paypal = (props) => {
     const paypal = useRef();
 
     useEffect(() => {
-        if(location.state == undefined || location.state?.totalPrice <= 0) {
+        if (location.state == undefined || location.state?.totalPrice <= 0) {
             navigate("/", { replace: true });
         }
 
@@ -70,10 +69,6 @@ const Paypal = (props) => {
         }
     }, [checkout]);
 
-    const handleCaptcha = (e) => {
-        console.log("Captcha value:", e.current.value);
-    }
-
     return (
         <Container className="mt-5 d-flex flex-column align-items-center paypal-container">
             {checkout ? <>
@@ -97,10 +92,6 @@ const Paypal = (props) => {
                     </div>
                 </> : <>
                     <h1>Time to pay</h1>
-                    <ReCAPTCHA
-                        sitekey="6LfGWI4gAAAAAOd82s2KZn1t06gRAio1rrrNzS8N"
-                        onChange={(e) => handleCaptcha(e)}
-                    />
                     <button onClick={() => setCheckout(true)} className="mt-5">
                         Checkout
                     </button>

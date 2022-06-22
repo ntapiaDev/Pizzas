@@ -51,7 +51,7 @@ router.post('/order', function (req, res, next) {
                         "order": order,
                         "price": price,
                         "user": user,
-                        "comment": 'please hurry I\'m verry angry !'
+                        "comment": 'Please hurry I\'m very angry !'
                     }, function (err) {
                         if (err) {
                             res.json({
