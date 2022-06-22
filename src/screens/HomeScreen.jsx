@@ -10,7 +10,6 @@ const HomeScreen = (props) => {
     const [storage, setStorage] = useLocalStorage("cart", []);
 
     const auth = useAuth();
-    console.log(auth);
 
     useEffect(() => {
         const getPizzas = async () => {

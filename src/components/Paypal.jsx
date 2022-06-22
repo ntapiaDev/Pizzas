@@ -1,12 +1,15 @@
 import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import { Container } from 'react-bootstrap';
+import { useCookies } from "react-cookie";
 import { useLocation } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
+import axios from 'axios';
 
 const Paypal = (props) => {
     const location = useLocation();
     const [storage, setStorage] = useLocalStorage("cart", []);
+    const [cookies, setCookie] = useCookies([]);
 
     const [checkout, setCheckout] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -31,6 +34,26 @@ const Paypal = (props) => {
                 onApprove: async (data, actions) => {
                     const order = await actions.order.capture()
                     console.log(order);
+
+                    //Enregistrement de la commande côté serveur
+                    try {
+                        const response = await axios.post('http://localhost:8080/pizza/order',
+                            {
+                                order: location.state.pizzas,
+                                price: location.state.totalPrice,
+                                userToken: cookies.token
+                            },
+                            {
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            });
+                        console.log(response);
+            
+                    } catch (err) {
+                        console.log(err.response);
+                    }
+
                     setCheckout(false);
                     setSuccess(true);
                     setStorage([]);
